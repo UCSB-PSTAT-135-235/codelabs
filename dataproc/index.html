@@ -46,7 +46,7 @@
 <ol type="1" start="1">
 <li>Login to your Google Cloud console and open a Google Cloud Shell.</li>
 <li>Make sure you are in the intended project.</li>
-<li>Note the ID of your project (referred to as <code><PROJECT-ID></code> below).</li>
+<li>Note the ID of your project (referred to as ##<code>PROJECT-ID##</code> below).</li>
 </ol>
 <h2 is-upgraded>Modify cluster creation command</h2>
 <p>Modify the following script and execute the resulting command in Cloud Shell.</p>
@@ -56,8 +56,8 @@
 <li>Copy the command below to an editor of your choice.</li>
 </ol>
 <pre>gcloud dataproc clusters create mycluster \
- --project &lt;PROJECT-ID&gt; \
- --bucket &lt;BUCKET-NAME&gt; \
+ --project ##PROJECT-ID## \
+ --bucket ##BUCKET-NAME## \
  --region us-central1 \
  --zone us-central1-c \
  --single-node \
@@ -70,8 +70,8 @@
  --metadata &#39;PIP_PACKAGES=google-cloud-storage&#39; \
  --enable-component-gateway</pre>
 <ol type="1" start="2">
-<li>Replace <code><PROJECT-ID></code> with your project ID.</li>
-<li>Replace <code><BUCKET-NAME></code> with your bucket name.</li>
+<li>Replace <code>##PROJECT-ID##</code> with your project ID.</li>
+<li>Replace <code>##BUCKET-NAME##</code> with your bucket name.</li>
 <li>Own a cloud shell and execute your command.</li>
 <li>From the <a href="https://console.cloud.google.com/dataproc" target="_blank">Dataproc page</a>, confirm that a cluster named <code>mycluster</code> is up and running.</li>
 </ol>
