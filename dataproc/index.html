@@ -88,14 +88,18 @@
       </google-codelab-step>
     
       <google-codelab-step label="Jupyter Lab and persistent file storage" duration="0">
-        <p>When you connect to Jupyter Lab, your interface will be similar to the following:</p>
+        <h2 is-upgraded><strong>Files in Jupyter Lab</strong></h2>
+<p>When you connect to Jupyter Lab, your interface will be similar to the following:</p>
 <p class="image-container"><img style="width: 624.00px" src="img\\51e306de62aef637.png"></p>
 <p>In the file explorer tree, you see <code>GCS</code> and <code>Local Disk</code>. The files you want to keep in Google Cloud Storage (GCS) bucket should into <code>GCS</code> directory. </p>
-<p>Navigate in Google Cloud Storage, <strong>##BUCKET-NAME##</strong> &gt; <strong>notebooks </strong>&gt; <strong>jupyter</strong>. When you save files into GCS directory in Jupyter Lab, this bucket path is where your files will be stored.</p>
-<p class="image-container"><img style="width: 624.00px" src="img\\6111265d6fea455e.png"></p>
-<p>You can also use gsutil command in the terminal to confirm:</p>
+<p>Your files are stored in the following directory on GCS bucket:</p>
+<pre>gs://##BUCKET-NAME##/notebooks/jupyter</pre>
+<p>Confirm by running the following command (replacing <code>##BUCKET-NAME##</code> with your bucket name) in Jupyter Lab terminal:</p>
+<pre>gsutil ls gs://##BUCKET-NAME##/notebooks/jupyter</pre>
 <p class="image-container"><img style="width: 624.00px" src="img\\5fbad131479266e9.png"></p>
-<pre>gsutil ls gs://pstat135/notebooks/jupyter</pre>
+<h2 is-upgraded><strong>Your files in Google Cloud Storage bucket</strong></h2>
+<p>Confirm your files are saved in Google Cloud Storage. Navigate to <strong>##BUCKET-NAME##</strong> &gt; <strong>notebooks </strong>&gt; <strong>jupyter</strong>. When you save files into GCS directory in Jupyter Lab, this bucket path is where your files will be stored as seen above.</p>
+<p class="image-container"><img style="width: 624.00px" src="img\\6111265d6fea455e.png"></p>
 
 
       </google-codelab-step>
