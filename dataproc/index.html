@@ -35,7 +35,7 @@
 <li>Select <strong>Multi-region</strong> and for location, select <strong>US</strong>, and leave the rest as default. </li>
 <li>Click on <strong>Create</strong></li>
 <li>Run <code>gsutil ls</code> to list all buckets in your project including the one you just made.</li>
-<li>Note the name of your bucket (referred to as <code><BUCKET-NAME></code> below).</li>
+<li>Note the name of your bucket (referred to as <code>##BUCKET-NAME##</code> below).</li>
 </ol>
 
 
@@ -46,7 +46,7 @@
 <ol type="1" start="1">
 <li>Login to your Google Cloud console and open a Google Cloud Shell.</li>
 <li>Make sure you are in the intended project.</li>
-<li>Note the ID of your project (referred to as ##<code>PROJECT-ID##</code> below).</li>
+<li>Note the ID of your project (referred to as <code>##PROJECT-ID##</code> below).</li>
 </ol>
 <h2 is-upgraded>Modify cluster creation command</h2>
 <p>Modify the following script and execute the resulting command in Cloud Shell.</p>
@@ -87,16 +87,25 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="Stop your Cluster" duration="0">
-        <p>When you are not using your cluster, please stop your instance so that you do not run out of funds.</p>
-<p>You can do this by going to the Dataproc page and stopping your cluster. Later, when you want to use the cluster, you can start it up again before connecting.</p>
-<p class="image-container"><img style="width: 624.00px" src="img\\6316f44f3313938c.png"></p>
+      <google-codelab-step label="Jupyter Lab and persistent file storage" duration="0">
+        <p>When you connect to Jupyter Lab, your interface will be similar to the following:</p>
+<p class="image-container"><img style="width: 624.00px" src="img\\51e306de62aef637.png"></p>
+<p>In the file explorer tree, you see <code>GCS</code> and <code>Local Disk</code>. The files you want to keep in Google Cloud Storage (GCS) bucket should into <code>GCS</code> directory. </p>
+<p>Navigate in Google Cloud Storage, <strong>##BUCKET-NAME##</strong> &gt; <strong>notebooks </strong>&gt; <strong>jupyter</strong>. When you save files into GCS directory in Jupyter Lab, this bucket path is where your files will be stored.</p>
+<p class="image-container"><img style="width: 624.00px" src="img\\6111265d6fea455e.png"></p>
+<p>You can also use gsutil command in the terminal to confirm:</p>
+<p class="image-container"><img style="width: 624.00px" src="img\\5fbad131479266e9.png"></p>
+<pre>gsutil ls gs://pstat135/notebooks/jupyter</pre>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Delete your Cluster" duration="0">
-        <p>To make sure we won&#39;t be charged for any of the resources we are not using, delete the cluster after each use. You can either</p>
+      <google-codelab-step label="Stop/delete your Cluster" duration="0">
+        <p>When you are not using your cluster, please stop your instance so you do not run out of funds.</p>
+<p>You can do this by going to the Dataproc page and stopping your cluster. Later, when you want to use the cluster, you can start it up again before connecting.</p>
+<p class="image-container"><img style="width: 624.00px" src="img\\6316f44f3313938c.png"></p>
+<h2 is-upgraded><strong>Delete your Cluster</strong></h2>
+<p>To make sure we won&#39;t be charged for any of the resources we are not using, delete the cluster after each use. You can either</p>
 <ul>
 <li>Use the Dataproc page to select the cluster and click DELETE.</li>
 <li>Use the following command from a cloud shell</li>
@@ -108,7 +117,7 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="Deploying a Large Cluster" duration="0">
+      <google-codelab-step label="(Optional) Large Cluster" duration="0">
         <p>To create a large cluster (CAUTION) with multiple nodes, modify anduse the following command:</p>
 <pre>gcloud dataproc clusters create bigcluster \
  --project &lt;PROJECT-ID&gt; \
@@ -131,12 +140,10 @@
 <p>One can easily add/remove preemptible workers from the UI (or in the command line). Go to the cluster of interest in Dataproc (make sure the cluster is running) &gt; <strong>Configuration</strong> &gt; <strong>Edit</strong> &gt; <strong>Add/remove secondary workers</strong> &gt; <strong>Save</strong>. After ~30 seconds, your cluster will reflect the change.</p>
 </aside>
 <p>This cluster will cost about $0.44 hour.</p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Stop your Cluster" duration="0">
-        <p>Follow the same procedure above to stop the cluster</p>
+<h2 is-upgraded><strong>Stop/delete your Cluster</strong></h2>
+<p>Follow the same procedure for stopping the cluster.</p>
+<p>To delete the cluster, type</p>
+<pre>gcloud dataproc clusters delete bigcluster --region us-central1</pre>
 
 
       </google-codelab-step>
