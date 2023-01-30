@@ -1,0 +1,153 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Deploying Dataproc Cluster on Google Cloud Platform</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="dataproc"
+                  title="Deploying Dataproc Cluster on Google Cloud Platform"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Create a bucket" duration="0">
+        <p>When we create a cluster, we will attach a Google Cloud Storage bucket. If you don&#39;t already have a bucket you can use, create one before we work on deploying our cluster:</p>
+<ol type="1" start="1">
+<li>Login to your Google Cloud console and go to Cloud Storage.</li>
+<li>Create a bucket, say <code>pstat135-xx</code><br>Replace <code>xx</code> to make your bucket name unique.</li>
+<li>Select <strong>Multi-region</strong> and for location, select <strong>US</strong>, and leave the rest as default. </li>
+<li>Click on <strong>Create</strong></li>
+<li>Run <code>gsutil ls</code> to list all buckets in your project including the one you just made.</li>
+<li>Note the name of your bucket (referred to as <code><BUCKET-NAME></code> below).</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create a cluster" duration="0">
+        <p>The following steps need to be done every time we create a new cluster:</p>
+<ol type="1" start="1">
+<li>Login to your Google Cloud console and open a Google Cloud Shell.</li>
+<li>Make sure you are in the intended project.</li>
+<li>Note the ID of your project (referred to as <code><PROJECT-ID></code> below).</li>
+</ol>
+<h2 is-upgraded>Modify cluster creation command</h2>
+<p>Modify the following script and execute the resulting command in Cloud Shell.</p>
+<aside class="warning"><p>When modifying the command below, ensure whitespaces are kept intact. For example, each line ends with a space followed by a backslash: i.e. no whitespaces exist after the backslash.</p>
+</aside>
+<ol type="1" start="1">
+<li>Copy the command below to an editor of your choice.</li>
+</ol>
+<pre>gcloud dataproc clusters create mycluster \
+ --project &lt;PROJECT-ID&gt; \
+ --bucket &lt;BUCKET-NAME&gt; \
+ --region us-central1 \
+ --zone us-central1-c \
+ --single-node \
+ --master-machine-type e2-highmem-4 \
+ --master-boot-disk-size 50 \
+ --optional-components=JUPYTER \
+ --image-version 2.0-debian10 \
+ --initialization-actions \
+   gs://dataproc-initialization-actions/python/pip-install.sh \
+ --metadata &#39;PIP_PACKAGES=google-cloud-storage&#39; \
+ --enable-component-gateway</pre>
+<ol type="1" start="2">
+<li>Replace <code><PROJECT-ID></code> with your project ID.</li>
+<li>Replace <code><BUCKET-NAME></code> with your bucket name.</li>
+<li>Own a cloud shell and execute your command.</li>
+<li>From the <a href="https://console.cloud.google.com/dataproc" target="_blank">Dataproc page</a>, confirm that a cluster named <code>mycluster</code> is up and running.</li>
+</ol>
+<p>This will give you a single-node cluster with 50 GB HHD, 4 CPU cores, and 32GB Memory (<code>e2-highmem-4</code>). This cluster will cost about $0.22/hour.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Connect to the Cluster" duration="0">
+        <p>From the Dataproc tab, select the cluster, and, under web interfaces, select Jupyter or JupyterLab to launch a Jupyter interface.</p>
+<p class="image-container"><img style="width: 624.00px" src="img\\39da2d9002e689e.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Stop your Cluster" duration="0">
+        <p>When you are not using your cluster, please stop your instance so that you do not run out of funds.</p>
+<p>You can do this by going to the Dataproc page and stopping your cluster. Later, when you want to use the cluster, you can start it up again before connecting.</p>
+<p class="image-container"><img style="width: 624.00px" src="img\\6316f44f3313938c.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Delete your Cluster" duration="0">
+        <p>To make sure we won&#39;t be charged for any of the resources we are not using, delete the cluster after each use. You can either</p>
+<ul>
+<li>Use the Dataproc page to select the cluster and click DELETE.</li>
+<li>Use the following command from a cloud shell</li>
+</ul>
+<pre>gcloud dataproc clusters delete mycluster --region us-central1</pre>
+<aside class="warning"><p>Notice that even after deleting the cluster your notebooks will persist in the bucket and when you create a new cluster that points to the same bucket you can simply reuse those notebooks</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Deploying a Large Cluster" duration="0">
+        <p>To create a large cluster (CAUTION) with multiple nodes, modify anduse the following command:</p>
+<pre>gcloud dataproc clusters create bigcluster \
+ --project &lt;PROJECT-ID&gt; \
+ --bucket &lt;BUCKET-NAME&gt; \
+ --region us-central1 \
+ --master-machine-type e2-highmem-4 \
+ --master-boot-disk-size 50 \
+ --num-workers 2 \
+ --worker-machine-type e2-highmem-2 \
+ --worker-boot-disk-size 50 \
+ --optional-components=JUPYTER \
+ --image-version 2.0-debian10 \
+ --initialization-actions \
+   gs://dataproc-initialization-actions/python/pip-install.sh \
+ --metadata &#39;PIP_PACKAGES=google-cloud-storage&#39; \
+ --enable-component-gateway</pre>
+<aside class="warning"><p>Please be advised of its cost. Cost can be calculated using Dataproc cost calculator (make sure to include GCE is selected): <a href="https://cloud.google.com/products/calculator/" target="_blank">https://cloud.google.com/products/calculator/</a></p>
+</aside>
+<aside class="special"><p>The cluster above has 1 master node and 2 workers (8 CPUs &amp; 64 GB memory). We could have used some preemptible instances to reduce cost, however, a cluster with preemptible instances cannot be stopped, so it&#39;s not ideal for our use-case. Preemptible instances are offered with a big discount (70%) but will not last for more than 24 hours. Add the following line to include 2 preemptible workers: <code>--num-secondary-workers 2</code></p>
+<p>One can easily add/remove preemptible workers from the UI (or in the command line). Go to the cluster of interest in Dataproc (make sure the cluster is running) &gt; <strong>Configuration</strong> &gt; <strong>Edit</strong> &gt; <strong>Add/remove secondary workers</strong> &gt; <strong>Save</strong>. After ~30 seconds, your cluster will reflect the change.</p>
+</aside>
+<p>This cluster will cost about $0.44 hour.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Stop your Cluster" duration="0">
+        <p>Follow the same procedure above to stop the cluster</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

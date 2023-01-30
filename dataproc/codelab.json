@@ -3,12 +3,12 @@
   "format": "html",
   "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2023-01-29T15:06:51Z",
-  "id": "qwer",
+  "updated": "2023-01-29T23:14:55Z",
+  "id": "dataproc",
   "duration": 0,
-  "title": "How to guides",
+  "title": "Deploying Dataproc Cluster on Google Cloud Platform",
   "authors": "Sang-Yun Oh",
-  "summary": "asdf",
+  "summary": "This codelab will guide you through deploying a Dataproc cluster on Google Cloud Platform",
   "source": "1pc0oK6tXY5CTy-EDJZVdnQfCC0h6M_kVO6xggbQ-Yfw",
   "theme": "web",
   "status": null,
@@ -18,5 +18,5 @@
   "tags": [
     "web"
   ],
-  "url": "qwer"
+  "url": "dataproc"
 }
