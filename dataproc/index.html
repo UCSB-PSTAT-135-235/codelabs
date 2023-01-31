@@ -59,7 +59,6 @@
  --project ##PROJECT-ID## \
  --bucket ##BUCKET-NAME## \
  --region us-central1 \
- --zone us-central1-c \
  --single-node \
  --master-machine-type e2-highmem-4 \
  --master-boot-disk-size 50 \
@@ -124,8 +123,8 @@
       <google-codelab-step label="(Optional) Large Cluster" duration="0">
         <p>To create a large cluster (CAUTION) with multiple nodes, modify anduse the following command:</p>
 <pre>gcloud dataproc clusters create bigcluster \
- --project &lt;PROJECT-ID&gt; \
- --bucket &lt;BUCKET-NAME&gt; \
+ --project ##PROJECT-ID## \
+ --bucket ##BUCKET-NAME## \
  --region us-central1 \
  --master-machine-type e2-highmem-4 \
  --master-boot-disk-size 50 \
