@@ -68,7 +68,7 @@
    gs://dataproc-initialization-actions/python/pip-install.sh \
  --metadata &#39;PIP_PACKAGES=google-cloud-storage&#39; \
  --enable-component-gateway \
- --max-idle 7200s</pre>
+ --max-idle 7200s --max-age 18000s</pre>
 <ol type="1" start="2">
 <li>Replace <code>##PROJECT-ID##</code> with your project ID.</li>
 <li>Replace <code>##BUCKET-NAME##</code> with your bucket name.</li>
@@ -138,7 +138,7 @@
    gs://dataproc-initialization-actions/python/pip-install.sh \
  --metadata &#39;PIP_PACKAGES=google-cloud-storage&#39; \
  --enable-component-gateway \
- --max-idle 7200s</pre>
+ --max-idle 7200s --max-age 18000s</pre>
 <aside class="warning"><p>Please be advised of its cost. Cost can be calculated using Dataproc cost calculator (make sure to include GCE is selected): <a href="https://cloud.google.com/products/calculator/" target="_blank">https://cloud.google.com/products/calculator/</a></p>
 </aside>
 <aside class="special"><p>The cluster above has 1 master node and 2 workers (8 CPUs &amp; 64 GB memory). We could have used some preemptible instances to reduce cost, however, a cluster with preemptible instances cannot be stopped, so it&#39;s not ideal for our use-case. Preemptible instances are offered with a big discount (70%) but will not last for more than 24 hours. Add the following line to include 2 preemptible workers: <code>--num-secondary-workers 2</code></p>
